@@ -1,1 +1,11 @@
 version: '3.9'
+
+networks:
+  default:
+    name: codeplex
+
+services:
+  middleware:
+    restart: always
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 80
