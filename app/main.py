@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from compylex.compiler import Compile
 import json
@@ -24,14 +24,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.post("/compile/")
 async def create_item(item: Item):
     result = Compile(item.code, item.lang, item.input, item.id)
     output = result.get_output()
     status = result.get_status()
     data = {
-        'output': output,
-        'status': status
+        "output": output,
+        "status": status,
     }
     data = json.dumps(data)
     return data
